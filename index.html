@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>ToDoList</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+  <h2>{{producto}} esta disponible </h2>
+  <ul>
+    <li v-for = "producto in productos">
+      <input type="number" v-model.number ="producto.cantidad">- {{producto.nombre}}
+      <span v-if ="producto.cantidad === 0">SIN INVENTARIO</span>
+      <button @click="producto.cantidad += 1">Agregar</button>
+      <button v-if="producto.cantidad > 0" @click="producto.cantidad -= 1">Quitar</button>
+     </li>
+  </ul>
+  <h2>Cantidad Total de Productos: {{ totalProductos }} </h2>
+<hr>
+<h2> Two Way Data Binding</h2>
+<span>{{ message }}</span><br>
+<input v-model="message">
+
+</div>
+
+
+
+
+
+<script>
+const app = new Vue({
+  el: '#app',
+  data:{
+    producto: 'botas',
+    productos: [{"nombre":"medias", "cantidad":0}, {"nombre":"zapatos", "cantidad":6},
+                {"nombre":"pantalones", "cantidad":2}, {"nombre":"guantes", "cantidad":0}],
+    respuestaApi:[],
+    message: 'Ejemplo de Two Way Data Binding'
+  },
+  computed:{
+    totalProductos(){
+      return this.productos.reduce( (sum, product)=>{
+        return sum + product.cantidad;
+      }, 0);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
